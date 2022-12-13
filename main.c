@@ -2,25 +2,21 @@
 
 int numMonty;
 
+/**
+ * numberval - transfo num input into integer
+ * @num: number
+ */
 void numberval(char *num)
 {
-	if(num)
+	if (num)
 		numMonty = atoi(num);
 }
 
-void push_f(__attribute__((unused))stack_t **stack, unsigned int line_number)
-{
-	printf("pushing %d to stack\n", numMonty);
-}
-void pall_f(__attribute__((unused))stack_t **stack, __attribute__((unused))unsigned int line_number)
-{
-	printf("printing everything\n");
-}
 /**
  * tokenize_call - tokenize a line and call a function if possible
  * @linebuf: line we want to check
+ * @lineNumber: line number
  */
-
 void tokenize_call(char *linebuf, unsigned int lineNumber)
 {
 	char *tok;
@@ -49,7 +45,7 @@ void tokenize_call(char *linebuf, unsigned int lineNumber)
 				numberval(tok);
 				inst[i].f(stack, lineNumber); /* call _f function if */
 			}
-	i++;
+			i++;
 		}
 	}
 }
@@ -72,7 +68,7 @@ int main(__attribute__((unused))int argc, char **argv)
 	while (fgets(linebuf, 1024, fd) != NULL)
 	{
 		/* call a function if match */
-		tokenize_call(linebuf,lineNumber);
+		tokenize_call(linebuf, lineNumber);
 		lineNumber++;
 	}
 	fclose(fd);

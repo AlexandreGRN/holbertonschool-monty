@@ -42,4 +42,9 @@ typedef struct instruction_s
 
 void push_f(stack_t **stack, unsigned int line_number);
 void pall_f(stack_t **stack, unsigned int line_number);
+void pint_f(stack_t **stack, unsigned int line_number);
+void pop_f(stack_t **stack, unsigned int line_number);
+void swap_f(stack_t **stack, unsigned int line_number);
+void add_f(stack_t **stack, unsigned int line_number);
+void nop_f(stack_t **stack, unsigned int line_number);
 #endif

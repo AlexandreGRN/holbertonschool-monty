@@ -5,4 +5,16 @@ push 2
 push                                                44
 pall
     push 5    
-      push    6        
+      push    6     
+
+pall
+pop
+pall
+pop
+pall
+add
+pall
+swap
+pall
+pop
+add
