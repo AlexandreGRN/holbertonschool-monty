@@ -39,5 +39,5 @@ typedef struct instruction_s
 
 
 void push_f(stack_t **stack, unsigned int line_number);
-void pall_f(stack_t **stack, unsigned int line_number);;
+void pall_f(stack_t **stack, unsigned int line_number);
 #endif
