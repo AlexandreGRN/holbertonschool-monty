@@ -1,5 +1,7 @@
 #include "monty.h"
 
+int numMonty;
+
 void push(stack_t **top, unsigned int line_number)
 {
 	stack_t *node = (malloc(sizeof(stack_t)));
@@ -13,7 +15,7 @@ void push(stack_t **top, unsigned int line_number)
 	(void) line_number;
 
 	node->prev = *top;
-	node->n = n;
+	node->n = numMonty;
 	node->next = NULL;
 	*top = node;
 }
