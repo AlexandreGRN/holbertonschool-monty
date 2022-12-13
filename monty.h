@@ -7,6 +7,8 @@
 #include <fcntl.h>
 #include <string.h>
 #include <stdlib.h>
+
+extern int numMonty;
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
  * @n: integer
@@ -39,5 +41,5 @@ typedef struct instruction_s
 
 
 void push_f(stack_t **stack, unsigned int line_number);
-void pall_f(stack_t **stack, unsigned int line_number);;
+void pall_f(stack_t **stack, unsigned int line_number);
 #endif
