@@ -5,10 +5,26 @@ int numMonty;
  * numberval - transfo num input into integer
  * @num: number
  */
-void numberval(char *num)
+void numberval(char *num, int line)
 {
-	if (num)
-		numMonty = atoi(num);
+	int i = 0;
+
+	if (!num)
+	{
+		fprintf(stderr, "L%d: usage: push integer\n", line);
+		exit(EXIT_FAILURE);
+	}
+
+	for (i = 0 ; num[i] ; i++)
+	{
+		if (!(num[0] == '-' || (num[i] >= 48 && num[i] <= 57)))
+		{
+			fprintf(stderr, "L%d: usage: push integer\n", line);
+			exit(EXIT_FAILURE);
+		}
+	}
+
+	numMonty = atoi(num);
 }
 
 /**
@@ -51,18 +67,16 @@ void tokenize_call(char *linebuf, unsigned int lineNumber, stack_t **stack)
 					fprintf(stderr, "L%d: usage: push integer\n", lineNumber);
 					exit(EXIT_FAILURE);
 				} */
-
-				numberval(tok);
+				if (i == 0)
+					numberval(tok, lineNumber);
 				inst[i].f(stack, lineNumber); /* call _f function if */
+				return;
 			}
 			j++;
 		}
 		/* if it does not reconized the command*/
-		if (j == 0)
-		{
-			fprintf(stderr, "L%d: unknown instruction %s\n", lineNumber, linebuf);
-			exit(EXIT_FAILURE);
-		}
+		fprintf(stderr, "L%d: unknown instruction %s\n", lineNumber, tok);
+		exit(EXIT_FAILURE);
 	}
 	free(tok);
 }
@@ -78,7 +92,7 @@ int main(__attribute__((unused))int argc, char **argv)
 {
 	FILE *fd;
 	char linebuf[1024];
-	unsigned int lineNumber = 0;
+	unsigned int lineNumber = 1;
 	stack_t *stack = NULL;
 	stack_t *tmp;
 
