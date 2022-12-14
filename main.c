@@ -64,6 +64,7 @@ void tokenize_call(char *linebuf, unsigned int lineNumber, stack_t **stack)
 			exit(EXIT_FAILURE);
 		}
 	}
+	free(tok);
 }
 
 /**
@@ -79,6 +80,7 @@ int main(__attribute__((unused))int argc, char **argv)
 	char linebuf[1024];
 	unsigned int lineNumber = 0;
 	stack_t *stack = NULL;
+	stack_t *tmp;
 
 	/* if does not have the executable and the monty file */
 	if (argc != 2)
@@ -101,4 +103,12 @@ int main(__attribute__((unused))int argc, char **argv)
 		lineNumber++;
 	}
 	fclose(fd);
+	while (stack != NULL)
+	{
+		tmp = stack;
+		stack = stack->next;
+		free(tmp);
+	}
+
+	free(stack);
 }
