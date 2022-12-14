@@ -5,9 +5,14 @@
  * @stack: list
  * @line_number: line count
  */
-void pint_f(stack_t **stack, __attribute__((unused))unsigned int line_number)
+void pint_f(stack_t **stack, unsigned int line_number)
 {
-	printf("%d\n", stack->n);
+	if (*stack == NULL)
+	{
+		fprintf(stderr, "L%d: can't pint, stack empty\n", line_number);
+		exit(EXIT_FAILURE);
+	}
+	printf("%d\n", (*stack)->n);
 }
 
 /**
@@ -15,11 +20,16 @@ void pint_f(stack_t **stack, __attribute__((unused))unsigned int line_number)
  * @stack: list
  * @line_number: line count
  */
-void pop_f(stack_t **stack, __attribute__((unused))unsigned int line_number)
+void pop_f(stack_t **stack, unsigned int line_number)
 {
-	stack = stack->prev;
-	free(stack->next);
-	stack->next = NULL;
+	if (stack == NULL)
+	{
+		fprintf(stderr, "L%d: can't pop an empty stack\n", line_number);
+		exit(EXIT_FAILURE);
+	}
+	(*stack) = (*stack)->next;
+	free((*stack)->prev);
+	(*stack)->prev = NULL;
 }
 
 /**
@@ -27,15 +37,20 @@ void pop_f(stack_t **stack, __attribute__((unused))unsigned int line_number)
  * @stack: list
  * @line_number: line count
  */
-void add_f(stack_t **stack, __attribute__((unused))unsigned int line_number)
+void add_f(stack_t **stack, unsigned int line_number)
 {
 	int m;
 
-	m = stack->n;
-	stack = stack->prev;
-	free(stack->next);
-	stack->next = NULL;
-	stack->n = stack->n + m;
+	if (*stack == NULL || (*stack)->next == NULL)
+	{
+		fprintf(stderr, "L%d: can't add, stack too short\n", line_number);
+		exit(EXIT_FAILURE);
+	}
+	m = (*stack)->n;
+	(*stack) = (*stack)->next;
+	free((*stack)->prev);
+	(*stack)->prev = NULL;
+	(*stack)->n = (*stack)->n + m;
 }
 
 /**
@@ -43,20 +58,27 @@ void add_f(stack_t **stack, __attribute__((unused))unsigned int line_number)
  * @stack: list
  * @line_number: line count
  */
-void swap_f(stack_t **stack, __attribute__((unused))unsigned int line_number)
+void swap_f(stack_t **stack, unsigned int line_number)
 {
 	int m;
 
-	m = stack->n;
-	stack->n = stack->prev->n;
-	stack->prev->n = m;
+	if (*stack == NULL || (*stack)->next == NULL)
+	{
+		fprintf(stderr, "L%d: can't swap, stack too short\n", line_number);
+		exit(EXIT_FAILURE);
+	}
+
+	m = (*stack)->n;
+	(*stack)->n = (*stack)->next->n;
+	(*stack)->next->n = m;
 }
 /**
  * nop_f - do nothing
  * @stack: list
  * @line_number: line count
  */
-void nop_f(__attribute__((unused))stack_t **stack, unsigned int line_number)
+void nop_f(stack_t **stack, unsigned int line_number)
 {
-	line_number = line_number;
+	(void) *stack;
+	(void) line_number;
 }
