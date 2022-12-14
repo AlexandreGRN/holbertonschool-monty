@@ -2,39 +2,43 @@
 
 int numMonty;
 
-void push_f(stack_t **top, unsigned int line_number)
+void push_f(stack_t **stack, unsigned int line_number)
 {
-	stack_t *node = (malloc(sizeof(stack_t)));
+	(void)line_number;
+	stack_t *newNode = NULL;
 
-	if (!node)
+	newNode = malloc(sizeof(stack_t));
+	if (newNode == NULL)
 	{
 		fprintf(stderr, "L<line_number>: usage: push integer\n");
 		exit(EXIT_FAILURE);
 	}
+	newNode->prev = NULL;
+	newNode->n = numMonty;
 
-	(void) line_number;
-
-	node->prev = NULL;
-	node->n = numMonty;
-
-	if (top != NULL)
+	if (stack != NULL)
 	{
-		node->next = *top;
-		(*top)->prev = node;
+		newNode->next = *stack;
+		(*stack)->prev = newNode;
 	}
 	else
-		node->next = NULL;
-	*top = node;
+		newNode->next = NULL;
+	*stack = newNode;
 }
 
 void pall_f(stack_t **stack, unsigned int line_number)
 {
+	(void)line_number;
 	stack_t *toprint = *stack;
 
-	(void) line_number;
 	while (toprint != NULL)
 	{
 		printf("%d\n", toprint->n);
-		toprint = toprint->prev;
+		if (toprint->next != NULL)
+		{
+			toprint = toprint->next;
+		}
+		else
+			break;
 	}
 }
