@@ -59,6 +59,8 @@ void tokenize_call(char *linebuf, unsigned int lineNumber, stack_t **stack)
 		/* if opcode (push for exemple) exists in the line, call a function */
 		for (; inst[i].opcode != NULL ; i++)
 		{
+			if (!tok)
+				return;
 			if (tok && strcmp(inst[i].opcode, tok) == 0) /* if function call */
 			{
 				tok = strtok(linebuf, delim); /* recup the argument */
