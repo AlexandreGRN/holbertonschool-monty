@@ -33,9 +33,6 @@ void pop_f(stack_t **stack, unsigned int line_number)
 		free((*stack)->prev);
 		(*stack)->prev = NULL;
 	}
-	//else
-	//	free(*stack);
-
 }
 
 /**
