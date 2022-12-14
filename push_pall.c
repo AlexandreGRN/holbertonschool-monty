@@ -2,6 +2,11 @@
 
 int numMonty;
 
+/**
+ * push_f - push a new element into the stack
+ * @stack: said stack
+ * @line_number: number of the line
+ */
 void push_f(stack_t **stack, unsigned int line_number)
 {
 	(void)line_number;
@@ -23,6 +28,11 @@ void push_f(stack_t **stack, unsigned int line_number)
 	*stack = newNode;
 }
 
+/**
+ * pall_f - print the whole stack
+ * @stack: said stack
+ * @line_number: number of the line
+ */
 void pall_f(stack_t **stack, unsigned int line_number)
 {
 	(void)line_number;
