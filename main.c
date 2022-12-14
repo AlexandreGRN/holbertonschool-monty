@@ -1,6 +1,7 @@
 #include "monty.h"
 
 int numMonty;
+int copy;
 
 /**
  * numberval - transfo num input into integer
@@ -17,12 +18,11 @@ void numberval(char *num)
  * @linebuf: line we want to check
  * @lineNumber: line number
  */
-void tokenize_call(char *linebuf, unsigned int lineNumber)
+void tokenize_call(extern int copyy, char *linebuf, unsigned int lineNumber)
 {
 	char *tok;
 	char delim[] = " \t\n";
 	int i = 0, num = 0;
-	stack_t **stack = NULL;
 
 	/* creating instruction list of all possible actions */
 	instruction_t inst[] = {
@@ -43,7 +43,7 @@ void tokenize_call(char *linebuf, unsigned int lineNumber)
 			{
 				tok = strtok(linebuf, delim); /* recup the argument */
 				numberval(tok);
-				inst[i].f(stack, lineNumber); /* call _f function if */
+				inst[i].f(copyy, lineNumber); /* call _f function if */
 			}
 			i++;
 		}
@@ -68,7 +68,7 @@ int main(__attribute__((unused))int argc, char **argv)
 	while (fgets(linebuf, 1024, fd) != NULL)
 	{
 		/* call a function if match */
-		tokenize_call(linebuf, lineNumber);
+		tokenize_call(copy, linebuf, lineNumber);
 		lineNumber++;
 	}
 	fclose(fd);
