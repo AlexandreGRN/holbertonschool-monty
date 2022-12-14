@@ -18,7 +18,7 @@ void numberval(char *num)
  */
 void tokenize_call(char *linebuf, unsigned int lineNumber, stack_t **stack)
 {
-	char *tok;
+	char *tok = "1";
 	char delim[] = " \t\n";
 	int i = 0;
 
@@ -26,11 +26,11 @@ void tokenize_call(char *linebuf, unsigned int lineNumber, stack_t **stack)
 	instruction_t inst[] = {
 		{"push", push_f},
 		{"pall", pall_f},
-		/*{"pint", pint_f},
+		{"pint", pint_f},
 		{"pop", pop_f},
 		{"swap", swap_f},
 		{"add", add_f},
-		{"nop", nop_f},*/
+		//{"nop", nop_f},
 		{NULL, NULL},
 	};
 
@@ -40,15 +40,14 @@ void tokenize_call(char *linebuf, unsigned int lineNumber, stack_t **stack)
 		tok = strtok(linebuf, delim);
 		linebuf = NULL;
 		/* if opcode (push for exemple) exists in the line, call a function */
-		while (inst[i].opcode != NULL)
+		for (; inst[i].opcode != NULL ; i++)
 		{
-			if (strcmp(inst[i].opcode, tok) == 0) /* if function call */
+			if (tok && strcmp(inst[i].opcode, tok) == 0) /* if function call */
 			{
 				tok = strtok(linebuf, delim); /* recup the argument */
 				numberval(tok);
 				inst[i].f(stack, lineNumber); /* call _f function if */
 			}
-			i++;
 		}
 	}
 }
