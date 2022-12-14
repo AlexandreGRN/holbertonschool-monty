@@ -7,7 +7,7 @@
  */
 void pint_f(stack_t **stack, __attribute__((unused))unsigned int line_number)
 {
-	printf("%d\n", stack->n);
+	printf("%d\n", (*stack)->n);
 }
 
 /**
@@ -17,9 +17,9 @@ void pint_f(stack_t **stack, __attribute__((unused))unsigned int line_number)
  */
 void pop_f(stack_t **stack, __attribute__((unused))unsigned int line_number)
 {
-	stack = stack->prev;
-	free(stack->next);
-	stack->next = NULL;
+	(*stack) = (*stack)->next;
+	free((*stack)->prev);
+	(*stack)->prev = NULL;
 }
 
 /**
@@ -31,11 +31,11 @@ void add_f(stack_t **stack, __attribute__((unused))unsigned int line_number)
 {
 	int m;
 
-	m = stack->n;
-	stack = stack->prev;
-	free(stack->next);
-	stack->next = NULL;
-	stack->n = stack->n + m;
+	m = (*stack)->n;
+	(*stack) = (*stack)->next;
+	free((*stack)->prev);
+	(*stack)->prev = NULL;
+	(*stack)->n = (*stack)->n + m;
 }
 
 /**
@@ -47,9 +47,9 @@ void swap_f(stack_t **stack, __attribute__((unused))unsigned int line_number)
 {
 	int m;
 
-	m = stack->n;
-	stack->n = stack->prev->n;
-	stack->prev->n = m;
+	m = (*stack)->n;
+	(*stack)->n = (*stack)->next->n;
+	(*stack)->next->n = m;
 }
 /**
  * nop_f - do nothing
