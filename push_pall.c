@@ -14,15 +14,12 @@ void push_f(stack_t **stack, unsigned int line_number)
 		exit(EXIT_FAILURE);
 	}
 	newNode->prev = NULL;
+	newNode->next = *stack;
 	newNode->n = numMonty;
-
-	if (stack != NULL)
+	if (*stack != NULL)
 	{
-		newNode->next = *stack;
 		(*stack)->prev = newNode;
 	}
-	else
-		newNode->next = NULL;
 	*stack = newNode;
 }
 
