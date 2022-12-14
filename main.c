@@ -1,9 +1,11 @@
 #include "monty.h"
 
 int numMonty;
+
 /**
  * numberval - transfo num input into integer
  * @num: number
+ * @line: line number
  */
 void numberval(char *num, int line)
 {
@@ -31,13 +33,13 @@ void numberval(char *num, int line)
  * tokenize_call - tokenize a line and call a function if possible
  * @linebuf: line we want to check
  * @lineNumber: line number
+ * @stack: link list as a stack
  */
 void tokenize_call(char *linebuf, unsigned int lineNumber, stack_t **stack)
 {
 	char *tok = "1";
 	char delim[] = " \t\n";
 	int i = 0;
-	int j = 0;
 
 	/* creating instruction list of all possible actions */
 	instruction_t inst[] = {
@@ -64,17 +66,11 @@ void tokenize_call(char *linebuf, unsigned int lineNumber, stack_t **stack)
 			if (tok && strcmp(inst[i].opcode, tok) == 0) /* if function call */
 			{
 				tok = strtok(linebuf, delim); /* recup the argument */
-			/*	if (tok == NULL)
-				{
-					fprintf(stderr, "L%d: usage: push integer\n", lineNumber);
-					exit(EXIT_FAILURE);
-				} */
 				if (i == 0)
 					numberval(tok, lineNumber);
 				inst[i].f(stack, lineNumber); /* call _f function if */
 				return;
 			}
-			j++;
 		}
 		/* if it does not reconized the command*/
 		fprintf(stderr, "L%d: unknown instruction %s\n", lineNumber, tok);
@@ -125,6 +121,6 @@ int main(__attribute__((unused))int argc, char **argv)
 		stack = stack->next;
 		free(tmp);
 	}
-
-	free(stack);
+	if (stack)
+		free(stack);
 }
