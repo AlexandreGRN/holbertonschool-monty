@@ -46,4 +46,8 @@ void add_f(stack_t **stack, unsigned int line_number);
 void nop_f(stack_t **stack, unsigned int line_number);
 void push_f(stack_t **stack, unsigned int line_number);
 void pall_f(stack_t **stack, unsigned int line_number);
+void sub_f(stack_t **stack, unsigned int line_number);
+void div_f(stack_t **stack, unsigned int line_number);
+void mul_f(stack_t **stack, unsigned int line_number);
+
 #endif

@@ -50,15 +50,16 @@ void tokenize_call(char *linebuf, unsigned int lineNumber, stack_t **stack)
 		{"swap", swap_f},
 		{"add", add_f},
 		{"nop", nop_f},
+		{"sub", sub_f},
+		{"div", div_f},
+		{"mul", mul_f},
 		{NULL, NULL},
 	};
-
 	/* tokenize + call if needed */
 	while (tok)
 	{
 		tok = strtok(linebuf, delim);
 		linebuf = NULL;
-		/* if opcode (push for exemple) exists in the line, call a function */
 		for (; inst[i].opcode != NULL ; i++)
 		{
 			if (!tok)
@@ -71,8 +72,7 @@ void tokenize_call(char *linebuf, unsigned int lineNumber, stack_t **stack)
 				inst[i].f(stack, lineNumber); /* call _f function if */
 				return;
 			}
-		}
-		/* if it does not reconized the command*/
+		} /* if it does not reconized the command*/
 		fprintf(stderr, "L%d: unknown instruction %s\n", lineNumber, tok);
 		exit(EXIT_FAILURE);
 	}
